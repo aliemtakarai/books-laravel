@@ -11,7 +11,7 @@
                     Book Data
                 @endslot
                 @slot('body')
-                    <a href="" class="btn btn-primary">Add Data</a>
+                    <a href="{{ route('book.create') }}" class="btn btn-primary">Add Data</a>
                     <div class="spacing">
                         @table
                             @slot('header')

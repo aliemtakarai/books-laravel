@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\BookCategory;
 
 class BookController extends Controller
 {
@@ -12,5 +13,14 @@ class BookController extends Controller
     public function index()
     {
         return view('books.index');
+    }
+
+    /**
+     * Book create page
+     */
+    public function create()
+    {
+        $categories = BookCategory::all();
+        return view('books.create', compact('categories'));
     }
 }

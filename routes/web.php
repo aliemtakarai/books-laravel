@@ -12,3 +12,4 @@
 */
 
 Route::get('/', 'BookController@index')->name('book.index');
+Route::get('/create', 'BookController@create')->name('book.create');
