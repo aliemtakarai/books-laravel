@@ -63,9 +63,36 @@ class BookController extends Controller
                   }
               })
               ->addColumn('action', function($books){
-                return '<a href="#" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                return '<a href="'.route('book.edit', $books->id).'" class="btn btn-warning" title="Change Author Name"><i class="fa fa-pencil"></i></a>
                         <a href="#" class="btn btn-danger"><i class="fa fa-trash"></i></a>';
               })
               ->make(true);
+    }
+
+    /**
+     * Change author name page
+     */
+    public function edit($id)
+    {
+        $book = Book::find($id);
+        $categories = BookCategory::all();
+
+        return view('books.edit', compact('book','categories'));
+    }
+
+    /**
+     * Change author name page function
+     */
+    public function update(BookRequest $request, $id)
+    {
+        try {
+            $book           = Book::find($id);
+            $book->author   = ucwords($request->author);
+            $book->save();
+
+            return redirect()->route('book.index')->with(['success'=>'Success Update Author']);
+        } catch (\Throwable $th) {
+            return redirect()->route('book.index')->with(['error'=>$th->getMessage()]);
+        }
     }
 }
