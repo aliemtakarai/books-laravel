@@ -11,7 +11,7 @@
                     Book
                 @endslot
                 @slot('body')
-                    <form action="" method="post">
+                    <form action="{{ route('book.store') }}" method="post">
                         @csrf
                         <div class="form-group">
                             <label>Title</label>

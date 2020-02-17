@@ -35,3 +35,14 @@
     </div>
 </div>
 @endsection
+@push('style')
+    <link rel="stylesheet" href="{{ asset('/css/toastr.min.css') }}">
+@endpush
+@push('script')
+    <script src="{{ asset('/js/toastr.min.js') }}"></script>
+    @if ($message = Session::get('success'))
+        <script>
+            toastr.success('{{ $message }}', {timeOut: 3000})
+        </script>
+    @endif
+@endpush
