@@ -49,12 +49,19 @@ class BookController extends Controller
     /**
      * Get Books with yajra datatable
      */
-    public function getBooks()
+    public function getBooks(Request $request)
     {
-        $books = Book::with('category')
-                ->get();
+        $books = Book::with('category');
         return DataTables::of($books)
               ->addIndexColumn()
+              ->filter(function($query) use ($request){
+                  if ($request->title) {
+                      $query->where('name', 'like', '%'.$request->title.'%');
+                  }
+                  if ($request->author) {
+                    $query->where('author', 'like', '%'.$request->author.'%');
+                  }
+              })
               ->addColumn('action', function($books){
                 return '<a href="#" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
                         <a href="#" class="btn btn-danger"><i class="fa fa-trash"></i></a>';

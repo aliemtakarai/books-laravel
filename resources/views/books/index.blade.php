@@ -6,6 +6,30 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
+            <div class="filter">
+                @card
+                    @slot('header')
+                        Filter
+                    @endslot
+                    @slot('body')
+                        <form action="" id="search">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label>Title</label>
+                                    <input type="text" class="form-control" placeholder="Book Title" id="title">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label>Author</label>
+                                    <input type="text" class="form-control" placeholder="Author Name" id="author">
+                                </div>
+                            </div>
+                            <div class="center">
+                                <input type="submit" class="btn btn-success" value="Search">
+                            </div>
+                        </form>
+                    @endslot
+                @endcard
+            </div>
             @card
                 @slot('header')
                     Book Data
@@ -54,18 +78,29 @@
     @endif
     <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script>
-        $('#data').DataTable({
-        serverSide: true,
-        searching: false,
-        ajax: '{{ route("book.getBooks") }}',
-        columns: [
-            {data: 'DT_RowIndex', name: 'id', orderable: false},
-            {data: 'name', name: 'name'},
-            {data: 'category.name', name: 'category', orderable: false},
-            {data: 'synopsis', name: 'synopsis', orderable: false},
-            {data: 'author', name: 'author'},
-            {data: 'action', name: 'action', orderable: false, searchable: false}
-        ]
-    });
+        var table = $('#data').DataTable({
+                        serverSide: true,
+                        searching: false,
+                        ajax: {
+                            url : '{{ route("book.getBooks") }}',
+                            data: function (d) {
+                                d.title = $('#title').val();
+                                d.author = $('#author').val();
+                            }
+                        },
+                        columns: [
+                            {data: 'DT_RowIndex', name: 'id', orderable: false},
+                            {data: 'name', name: 'name'},
+                            {data: 'category.name', name: 'category', orderable: false},
+                            {data: 'synopsis', name: 'synopsis', orderable: false},
+                            {data: 'author', name: 'author'},
+                            {data: 'action', name: 'action', orderable: false, searchable: false}
+                        ]
+                    });
+
+        $('#search').on('submit', function(e){
+            table.draw()
+            e.preventDefault()
+        })
     </script>
 @endpush
