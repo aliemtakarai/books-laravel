@@ -45,4 +45,9 @@
             toastr.success('{{ $message }}', {timeOut: 3000})
         </script>
     @endif
+    @if ($message = Session::get('error'))
+        <script>
+            toastr.error('{{ $message }}', {timeOut: 3000})
+        </script>
+    @endif
 @endpush

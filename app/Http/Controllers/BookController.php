@@ -41,7 +41,7 @@ class BookController extends Controller
 
             return redirect()->route('book.index')->with(['success'=>'Success Add Book']);
         } catch (\Throwable $th) {
-            return $th->getMessage();
+            return redirect()->route('book.index')->with(['error'=>$th->getMessage()]);
         }
     }
 }
