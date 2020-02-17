@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
 use App\Models\BookCategory;
 use App\Models\Book;
+use DataTables;
 
 class BookController extends Controller
 {
@@ -43,5 +44,21 @@ class BookController extends Controller
         } catch (\Throwable $th) {
             return redirect()->route('book.index')->with(['error'=>$th->getMessage()]);
         }
+    }
+
+    /**
+     * Get Books with yajra datatable
+     */
+    public function getBooks()
+    {
+        $books = Book::with('category')
+                ->get();
+        return DataTables::of($books)
+              ->addIndexColumn()
+              ->addColumn('action', function($books){
+                return '<a href="#" class="btn btn-warning"><i class="fa fa-pencil"></i></a>
+                        <a href="#" class="btn btn-danger"><i class="fa fa-trash"></i></a>';
+              })
+              ->make(true);
     }
 }

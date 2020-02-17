@@ -37,6 +37,8 @@
 @endsection
 @push('style')
     <link rel="stylesheet" href="{{ asset('/css/toastr.min.css') }}">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 @endpush
 @push('script')
     <script src="{{ asset('/js/toastr.min.js') }}"></script>
@@ -50,4 +52,20 @@
             toastr.error('{{ $message }}', {timeOut: 3000})
         </script>
     @endif
+    <script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script>
+        $('#data').DataTable({
+        serverSide: true,
+        searching: false,
+        ajax: '{{ route("book.getBooks") }}',
+        columns: [
+            {data: 'DT_RowIndex', name: 'id', orderable: false},
+            {data: 'name', name: 'name'},
+            {data: 'category.name', name: 'category', orderable: false},
+            {data: 'synopsis', name: 'synopsis', orderable: false},
+            {data: 'author', name: 'author'},
+            {data: 'action', name: 'action', orderable: false, searchable: false}
+        ]
+    });
+    </script>
 @endpush
