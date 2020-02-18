@@ -58,14 +58,18 @@
         </div>
     </div>
 </div>
+@swal
+@endswal
 @endsection
 @push('style')
     <link rel="stylesheet" href="{{ asset('/css/toastr.min.css') }}">
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.min.css">
 @endpush
 @push('script')
     <script src="{{ asset('/js/toastr.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/8.11.8/sweetalert2.all.min.js"></script>
     @if ($message = Session::get('success'))
         <script>
             toastr.success('{{ $message }}', {timeOut: 3000})

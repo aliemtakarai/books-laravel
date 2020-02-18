@@ -64,7 +64,7 @@ class BookController extends Controller
               })
               ->addColumn('action', function($books){
                 return '<a href="'.route('book.edit', $books->id).'" class="btn btn-warning" title="Change Author Name"><i class="fa fa-pencil"></i></a>
-                        <a href="#" class="btn btn-danger"><i class="fa fa-trash"></i></a>';
+                        <a href="#" onclick="destroy('.$books->id.')" class="btn btn-danger" title="Delete Book"><i class="fa fa-trash"></i></a>';
               })
               ->make(true);
     }
@@ -91,6 +91,21 @@ class BookController extends Controller
             $book->save();
 
             return redirect()->route('book.index')->with(['success'=>'Success Update Author']);
+        } catch (\Throwable $th) {
+            return redirect()->route('book.index')->with(['error'=>$th->getMessage()]);
+        }
+    }
+
+    /**
+     * Delete Book on list
+     */
+    public function destroy($id)
+    {
+        try {
+            $book = Book::find($id);
+            $book->delete();
+
+            return redirect()->route('book.index')->with(['success'=>'Success Delete Book']);
         } catch (\Throwable $th) {
             return redirect()->route('book.index')->with(['error'=>$th->getMessage()]);
         }

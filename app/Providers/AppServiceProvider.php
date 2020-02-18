@@ -26,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Blade::component('components.card', 'card');
         Blade::component('components.table', 'table');
+        Blade::component('components.swal', 'swal');
     }
 }
