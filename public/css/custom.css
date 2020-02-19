@@ -7,3 +7,12 @@
 .error {
     color: red;
 }
+.filter {
+    padding-bottom: 25px;
+}
+.grid {
+    display: grid;
+}
+.block {
+    display: block;
+}
