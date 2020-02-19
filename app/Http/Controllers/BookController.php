@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\BookRequest;
+use SoapBox\Formatter\Formatter;
 use App\Models\BookCategory;
 use App\Models\Book;
 use DataTables;
@@ -106,6 +107,36 @@ class BookController extends Controller
             $book->delete();
 
             return redirect()->route('book.index')->with(['success'=>'Success Delete Book']);
+        } catch (\Throwable $th) {
+            return redirect()->route('book.index')->with(['error'=>$th->getMessage()]);
+        }
+    }
+
+    /**
+     * Export Data CSV & Xml
+     */
+    public function export(Request $request)
+    {
+        try {
+            $book = Book::get($request->filter)->toArray();
+            if ($request->type == "1") {
+                $formater = Formatter::make($book, Formatter::ARR)->toXml();
+                header('Content-Disposition: attachment; filename="export.xml"');
+                header("Cache-control: private");
+                header("Content-type: application/force-download");
+                header("Content-transfer-encoding: binary\n");
+
+                return $formater;
+
+            } elseif ($request->type == "0") {
+                $formater = Formatter::make($book, Formatter::ARR)->toCsv();
+                header('Content-Disposition: attachment; filename="export.csv"');
+                header("Cache-control: private");
+                header("Content-type: application/force-download");
+                header("Content-transfer-encoding: binary\n");
+
+                return $formater;
+            }
         } catch (\Throwable $th) {
             return redirect()->route('book.index')->with(['error'=>$th->getMessage()]);
         }

@@ -13,7 +13,8 @@
         "laravel/framework": "^6.2",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^1.2",
-        "yajra/laravel-datatables-oracle": "^9.8"
+        "yajra/laravel-datatables-oracle": "^9.8",
+        "soapbox/laravel-formatter": "2.x"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

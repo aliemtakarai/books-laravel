@@ -36,6 +36,7 @@
                 @endslot
                 @slot('body')
                     <a href="{{ route('book.create') }}" class="btn btn-primary">Add Data</a>
+                    <a href="{{ route('book.export') }}" data-toggle="modal" data-target="#modal" class="btn btn-primary">Export</a>
                     <div class="spacing">
                         @table
                             @slot('header')
@@ -58,6 +59,38 @@
         </div>
     </div>
 </div>
+@modal
+    @slot('head')
+        Export Data
+    @endslot
+    @slot('body')
+        <div class="container">
+            <form action="{{ route('book.export') }}" method="POST">
+                @csrf
+                <div class="form-group grid">
+                    <label>Filter By</label>
+                    <div class="block">
+                        <input type="checkbox" name="filter[]" value="name"> Title
+                    </div>
+                    <div class="block">
+                        <input type="checkbox" name="filter[]" value="author"> Author
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Export Type</label>
+                    <select name="type" class="form-control">
+                        <option hidden value="">Choose Export Type</option>
+                        <option value="0">CSV</option>
+                        <option value="1">XML</option>
+                    </select>
+                </div>
+                <div class="col-sm-12 text-right" style="padding-top: 12px;">
+                    <button type="submit" class="btn btn-primary">Export</button>
+                </div>
+            </form>
+        </div>
+    @endslot
+@endmodal
 @swal
 @endswal
 @endsection

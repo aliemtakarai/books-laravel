@@ -18,3 +18,4 @@ Route::get('/get-books', 'BookController@getBooks')->name('book.getBooks');
 Route::get('/{id}/edit', 'BookController@edit')->name('book.edit');
 Route::post('/{id}/update', 'BookController@update')->name('book.update');
 Route::post('/delete/{id}', 'BookController@destroy')->name('book.destroy');
+Route::post('/export', 'BookController@export')->name('book.export');
